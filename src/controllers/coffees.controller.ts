@@ -1,9 +1,41 @@
-import { Controller, Get } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { CreateCoffeeDto } from 'src/dtos/create-coffee.dto';
+import { CoffeesService } from 'src/services/coffeesService';
 
 @Controller('coffees')
 export class CoffeesController {
+  constructor(private readonly coffeesService: CoffeesService) {}
   @Get()
   findAll() {
-    return 'This action returns all coffees';
+    return this.coffeesService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.coffeesService.findOne(id);
+  }
+
+  @Post()
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    return this.coffeesService.create(createCoffeeDto);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateCoffeeDto: any) {
+    return this.coffeesService.update(id, updateCoffeeDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.coffeesService.remove(id);
   }
 }
