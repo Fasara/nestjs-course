@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Coffee } from 'src/entities/coffee.entity';
 import { CreateCoffeeDto, UpdateCoffeeDto } from 'src/dtos/create-coffee.dto';
 import { Flavor } from 'src/entities/flavor.entity';
+import { PaginationQuery } from 'src/dtos/pagination-query-dto';
 
 @Injectable()
 export class CoffeesService {
@@ -14,11 +15,14 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
   ) {}
 
-  findAll() {
+  findAll(paginationQuery: PaginationQuery) {
+    const { limit, offset } = paginationQuery;
     return this.coffeeRepository.find({
       relations: {
         flavors: true,
       },
+      skip: offset,
+      take: limit,
     });
   }
 
