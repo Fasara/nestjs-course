@@ -20,7 +20,10 @@ export class CoffeesService {
     private readonly dataSource: DataSource,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
   ) {
-    console.log('CoffeesService instantiated.......');
+    console.log(
+      'CoffeesService instantiated....... Coffee Brands: ',
+      coffeeBrands,
+    );
   }
 
   findAll(paginationQuery: PaginationQuery) {

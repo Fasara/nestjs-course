@@ -12,9 +12,25 @@ import { COFFEE_BRANDS } from 'src/common/constants';
   controllers: [CoffeesController],
   providers: [
     CoffeesService,
+    /**
+     * Providing coffee brands using a constant value injection token
+     */
+    // {
+    //   provide: COFFEE_BRANDS,
+    //   useValue: ['buddy brew', 'nescafe', 'starbucks'],
+    // },
+    /**
+     * useFactory example (commented out)
+     * Allows us to provide dynamic values or perform complex logic
+     * before supplying the value to the dependency injection system.
+     * The value return form the factory function is what will be used by the provider.
+     * In this case, it returns an array of coffee brand names.
+     */
     {
       provide: COFFEE_BRANDS,
-      useValue: ['buddy brew', 'nescafe', 'starbucks'],
+      useFactory: () => {
+        return ['buddy brew', 'nescafe', 'starbucks'];
+      },
     },
   ],
   exports: [CoffeesService],
