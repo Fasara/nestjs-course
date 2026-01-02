@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Coffee } from 'src/entities/coffee.entity';
@@ -8,6 +8,7 @@ import { Event } from 'src/entities/event.entity';
 import { CreateCoffeeDto, UpdateCoffeeDto } from 'src/dtos/create-coffee.dto';
 import { PaginationQuery } from 'src/dtos/pagination-query-dto';
 import { DataSource } from 'typeorm';
+import { COFFEE_BRANDS } from 'src/common/constants';
 
 @Injectable()
 export class CoffeesService {
@@ -17,7 +18,10 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
     private readonly dataSource: DataSource,
-  ) {}
+    @Inject(COFFEE_BRANDS) coffeeBrands: string[],
+  ) {
+    console.log('CoffeesService instantiated.......');
+  }
 
   findAll(paginationQuery: PaginationQuery) {
     const { limit, offset } = paginationQuery;
