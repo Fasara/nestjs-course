@@ -7,7 +7,7 @@ import { Flavor } from 'src/entities/flavor.entity';
 import { Event } from 'src/entities/event.entity';
 import { CreateCoffeeDto, UpdateCoffeeDto } from 'src/dtos/create-coffee.dto';
 import { PaginationQuery } from 'src/dtos/pagination-query-dto';
-import { DataSource } from 'typeorm/browser';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class CoffeesService {

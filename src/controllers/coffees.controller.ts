@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateCoffeeDto } from 'src/dtos/create-coffee.dto';
 import { PaginationQuery } from 'src/dtos/pagination-query-dto';
-import { CoffeesService } from 'src/services/coffeesService';
+import { CoffeesService } from 'src/services/coffees.service';
 
 @Controller('coffees')
 export class CoffeesController {
