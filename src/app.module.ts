@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CoffeesModule } from './modules/coffee.module';
 import { CoffeeRatingModule } from './modules/coffee-rating.module';
+import { GreetingModule } from './modules/greetings.module';
 
 @Module({
   imports: [
@@ -26,6 +27,8 @@ import { CoffeeRatingModule } from './modules/coffee-rating.module';
         synchronize: true,
       }),
     }),
+    // We are "configuring" the module on the fly
+    GreetingModule.register({ language: 'fr' }),
     CoffeesModule,
     CoffeeRatingModule,
   ],
