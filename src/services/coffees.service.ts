@@ -9,6 +9,9 @@ import { CreateCoffeeDto, UpdateCoffeeDto } from 'src/dtos/create-coffee.dto';
 import { PaginationQuery } from 'src/dtos/pagination-query-dto';
 import { DataSource } from 'typeorm';
 import { COFFEE_BRANDS } from 'src/common/constants';
+import * as config from '@nestjs/config';
+import coffeesConfig from 'src/config/coffees.config';
+import { ConfigType } from '@nestjs/config';
 
 /**
  * Setting the scope to REQUEST means that a new instance of CoffeesService
@@ -20,7 +23,7 @@ import { COFFEE_BRANDS } from 'src/common/constants';
  * memory consumption and potential performance issues due to the creation of
  * multiple instances. Use it only when necessary.
  */
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class CoffeesService {
   constructor(
     @InjectRepository(Coffee)
@@ -28,9 +31,23 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
     private readonly dataSource: DataSource,
+    private readonly configService: config.ConfigService,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
+
+    /**
+     * Injecting configuration using the configuration namespace
+     * defined in coffees.config.ts
+     * Each namespace configuration exposes a KEY property that can be used
+     * to inject the configuration object anywhere in the application.
+     *
+     * ConfigType is a utility type provided by NestJS to infer
+     * the type of the configuration object based on the configuration
+     * factory function.
+     */
+    @Inject(coffeesConfig.KEY)
+    coffeesConfiguration: config.ConfigType<typeof coffeesConfig>,
   ) {
-    console.log('CoffeesService instantiated......');
+    console.log(coffeesConfiguration.defaultCoffeeFlavor);
   }
 
   findAll(paginationQuery: PaginationQuery) {
