@@ -1,4 +1,4 @@
-import { Injectable, Module } from '@nestjs/common';
+import { Injectable, Module, Scope } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeesController } from 'src/controllers/coffees.controller';
 import { Coffee } from 'src/entities/coffee.entity';
@@ -39,6 +39,13 @@ export class CoffeeBrandsFactory {
       useFactory: (coffeeBrandsFactory: CoffeeBrandsFactory) =>
         coffeeBrandsFactory.create(),
       inject: [CoffeeBrandsFactory],
+      /**
+       * Setting the scope to TRANSIENT means that a new instance of the provider
+       * will be created each time it is requested. This is useful when you want to
+       * ensure that each consumer gets a fresh instance, avoiding shared state
+       * between different parts of the application.
+       */
+      scope: Scope.TRANSIENT,
     },
   ],
   exports: [CoffeesService],

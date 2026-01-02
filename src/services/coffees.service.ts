@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Coffee } from 'src/entities/coffee.entity';
@@ -10,7 +10,17 @@ import { PaginationQuery } from 'src/dtos/pagination-query-dto';
 import { DataSource } from 'typeorm';
 import { COFFEE_BRANDS } from 'src/common/constants';
 
-@Injectable()
+/**
+ * Setting the scope to REQUEST means that a new instance of CoffeesService
+ * will be created for each incoming request. This is useful when you want to
+ * maintain state or context specific to a single request, such as user-specific
+ * data or request-specific configurations.
+ * It can inject the Request object to access request-specific information.
+ * However, be cautious when using REQUEST scope, as it can lead to increased
+ * memory consumption and potential performance issues due to the creation of
+ * multiple instances. Use it only when necessary.
+ */
+@Injectable({ scope: Scope.REQUEST })
 export class CoffeesService {
   constructor(
     @InjectRepository(Coffee)
@@ -20,10 +30,7 @@ export class CoffeesService {
     private readonly dataSource: DataSource,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
   ) {
-    console.log(
-      'CoffeesService instantiated....... Coffee Brands: ',
-      coffeeBrands,
-    );
+    console.log('CoffeesService instantiated......');
   }
 
   findAll(paginationQuery: PaginationQuery) {
