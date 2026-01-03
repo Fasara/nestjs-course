@@ -22,7 +22,6 @@ export class HttExceptionFilter<
       typeof response === 'string'
         ? { message: exceptionResponse }
         : (exceptionResponse as object);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     response.status(status).json({
       ...errorMessage,
       timestamp: new Date().toISOString(),
