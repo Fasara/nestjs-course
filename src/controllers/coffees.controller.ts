@@ -9,6 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { Public } from 'src/common/decorators/public.decorator';
 import { CreateCoffeeDto } from 'src/dtos/create-coffee.dto';
 import { PaginationQuery } from 'src/dtos/pagination-query-dto';
 import { CoffeesService } from 'src/services/coffees.service';
@@ -16,6 +17,8 @@ import { CoffeesService } from 'src/services/coffees.service';
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
+
+  @Public()
   @Get()
   findAll(@Query() paginationQuery: PaginationQuery) {
     return this.coffeesService.findAll(paginationQuery);

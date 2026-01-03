@@ -46,9 +46,7 @@ export class CoffeesService {
      */
     @Inject(coffeesConfig.KEY)
     coffeesConfiguration: config.ConfigType<typeof coffeesConfig>,
-  ) {
-    console.log(coffeesConfiguration.defaultCoffeeFlavor);
-  }
+  ) {}
 
   findAll(paginationQuery: PaginationQuery) {
     const { limit, offset } = paginationQuery;

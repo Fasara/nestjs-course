@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CoffeesModule } from './modules/coffee.module';
 import { CoffeeRatingModule } from './modules/coffee-rating.module';
 import { GreetingModule } from './modules/greetings.module';
+import { CommonModule } from './common/common.module';
 import Joi from '@hapi/joi';
 
 @Module({
@@ -39,6 +40,7 @@ import Joi from '@hapi/joi';
     GreetingModule.register({ language: 'fr' }),
     CoffeesModule,
     CoffeeRatingModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
