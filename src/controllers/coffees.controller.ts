@@ -9,6 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { Protocol } from 'src/common/decorators/protocol.decorator';
 import { Public } from 'src/common/decorators/public.decorator';
 import { CreateCoffeeDto } from 'src/dtos/create-coffee.dto';
 import { PaginationQuery } from 'src/dtos/pagination-query-dto';
@@ -20,7 +21,11 @@ export class CoffeesController {
 
   @Public()
   @Get()
-  findAll(@Query() paginationQuery: PaginationQuery) {
+  findAll(
+    @Protocol() protocol: string,
+    @Query() paginationQuery: PaginationQuery,
+  ) {
+    console.log(`Protocol: ${protocol}`);
     return this.coffeesService.findAll(paginationQuery);
   }
 
